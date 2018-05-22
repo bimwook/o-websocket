@@ -1,0 +1,16 @@
+{
+  "name": "websocket",
+  "version": "1.0.0",
+  "description": "websocket-server woo",
+  "main": "main.js",
+  "scripts": {
+    "test": "node websocket"
+  },
+  "keywords": [
+    "node",
+    "websocket-server",
+    "woo"
+  ],
+  "author": "woo",
+  "license": "MIT"
+}
