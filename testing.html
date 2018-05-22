@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <title>WebSocket</title>
+    <style type="text/css">
+      em {
+        padding: 1em; 
+        font-style: normal;
+        font-family: monospace;
+        font-size: 16px;
+        line-height: 1.2;
+      }
+      pre {
+        font-family: monospace;
+        padding: 1em; 
+        font-size: 12px;
+        line-height: 1.2;
+        max-width: 640px; 
+        white-space: pre-wrap;
+        border: solid 1px #EAEAEA;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <em>WebSocket</em>
+    <pre id="box" style=""></pre>
+    <script type="text/javascript">
+      -function(woo){
+        var box = document.querySelector("#box");
+        var fn = {};
+        fn.name = woo.name || ("匿名(" + Math.floor(Math.random()*100000000000) + ")");
+        fn.connected = false;
+        fn.connecting = false;
+        fn.reload = function(){
+          var ws = new WebSocket("ws://127.0.0.1:11111");
+          ws.onopen = function(evt) { 
+            fn.connecting = false;
+            fn.connected = true;
+            console.log("Connection open ..."); 
+            ws.send("$nick " + fn.name);
+          };
+          ws.onmessage = function(evt) {
+            box.innerText = evt.data;
+            //console.log(evt.data);
+            //ws.close();
+          };
+          ws.onerror = function(evt) {
+            this.close();
+            console.log(evt);
+          };
+          ws.onclose = function(evt) {
+            fn.connected = false;
+            fn.connecting = false;
+            console.log("Connection closed.");
+          };        
+        }
+        window.setInterval(function(){
+          var working = (fn.connecting || fn.connected);
+          if(working){
+            return;
+          }
+          console.log("connecting...");
+          fn.connecting = true;
+          fn.reload();
+        }, 7e3);
+        fn.reload();
+      }({});
+    </script>  
+  </body>
+</html>
+  
