@@ -256,7 +256,6 @@ const WEBSOCKET_UUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
     },
     start: function(sender){
       let me = this;
-      let host = "https://www.bimwook.com:11180";
       this.sender = sender;
       this.timer = setInterval(function(){
         let text = 'message: demo';
